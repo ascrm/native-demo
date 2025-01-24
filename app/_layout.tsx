@@ -1,8 +1,9 @@
 /** @format */
 
-import { View, Text, TextInput, Button, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TextInput, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
 import '../global.css'
 import { useState } from 'react'
+import { cn } from '@/utils/cn'
 
 export default function Layout() {
   const [username, setUsername] = useState('')
@@ -10,6 +11,7 @@ export default function Layout() {
   const [usernamePlaceHolder, setUsernamePlaceHolder] = useState('账号')
   const [passwordPlaceHolder, setPasswordPlaceHolder] = useState('密码')
   const [loading, setLoading] = useState(false)
+  const [buttonActive, setButtonActive] = useState(false)
 
   const onPress = () => {
     setLoading(true)
@@ -40,14 +42,15 @@ export default function Layout() {
           placeholder={passwordPlaceHolder}
           placeholderTextColor="#ccc"
           value={password}
+          secureTextEntry={true} // 启用密码隐藏
           textAlign="center" // 使文本居中
           onChangeText={text => setPassword(text)}
           onFocus={() => setPasswordPlaceHolder('')} // 点击时清空占位符
           onBlur={() => setPasswordPlaceHolder('账号')}
         />
 
-        <TouchableWithoutFeedback onPress={onPress}>
-          <View className={'mt-[50px] flex-row justify-center rounded-[3px] bg-[#1e90ff]'}>
+        <TouchableWithoutFeedback onPressIn={() => setButtonActive(true)} onPressOut={() => setButtonActive(false)} onPress={onPress}>
+          <View className={cn('mt-[50px] flex-row justify-center rounded-[3px] bg-[#1e90ff]', buttonActive && 'opacity-75')}>
             <View className={'relative'}>
               <ActivityIndicator className={'absolute left-[-25px] top-1/2 translate-y-[-50%]'} size="small" color="white" animating={loading} />
               <Text className={'py-[8px] text-white'}>登录</Text>
