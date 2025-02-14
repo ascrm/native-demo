@@ -10,7 +10,8 @@ export default function FavoritesScreenLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Favorites',
+          title: '主页',
+          headerShown: false,
         }}
       ></Stack.Screen>
     </Stack>
